@@ -1,0 +1,17 @@
+# Chuẩn hoá xuống dòng: repo lưu LF, máy Windows checkout ra CRLF.
+* text=auto
+
+*.cs       text diff=csharp
+*.csproj   text eol=crlf
+*.sln      text eol=crlf
+*.manifest text eol=crlf
+*.json     text
+*.sql      text
+*.md       text
+
+# File nhị phân, Git không được đụng vào
+*.ico binary
+*.png binary
+*.jpg binary
+*.exe binary
+*.db  binary

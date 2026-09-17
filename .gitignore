@@ -1,0 +1,9 @@
+bin/
+obj/
+.vs/
+publish/
+*.user
+Images/
+*.db
+*.db-shm
+*.db-wal

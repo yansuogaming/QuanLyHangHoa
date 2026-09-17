@@ -1,0 +1,62 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+    <RootNamespace>QuanLySP</RootNamespace>
+    <AssemblyName>QuanLySanPham</AssemblyName>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+  </PropertyGroup>
+
+  <!-- Thông tin hiển thị ở tab Details của file exe và trong giao diện phần mềm -->
+  <PropertyGroup>
+    <Product>Quản Lý Sản Phẩm</Product>
+    <AssemblyTitle>Quản Lý Sản Phẩm</AssemblyTitle>
+    <Description>Phần mềm quản lý sản phẩm trên cơ sở dữ liệu QuanLyHangHoa (LoaiSP, SanPham).</Description>
+    <Company>Yansuo</Company>
+    <Authors>Yansuo</Authors>
+    <Copyright>© 2026 Yansuo</Copyright>
+    <Version>1.0.0</Version>
+    <FileVersion>1.0.0.0</FileVersion>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </PropertyGroup>
+
+  <!-- Bản portable: gói toàn bộ .NET runtime + thư viện vào đúng một file exe -->
+  <PropertyGroup Condition="'$(PublishSingleFile)' == 'true'">
+    <SelfContained>true</SelfContained>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.11" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Khi chạy từ mã nguồn thì có sẵn file cấu hình; bản portable thì không kèm
+         để giữ đúng một file, ứng dụng tự dùng giá trị mặc định. -->
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Nhúng script SQL để ứng dụng tự tạo CSDL khi chạy lần đầu -->
+    <EmbeddedResource Include="..\..\Database\QuanLyHangHoa.sql"
+                      LogicalName="QuanLySP.Database.QuanLyHangHoa.sql" />
+    <EmbeddedResource Include="..\..\Database\QuanLyHangHoa.Sqlite.sql"
+                      LogicalName="QuanLySP.Database.QuanLyHangHoa.Sqlite.sql" />
+    <!-- Nhúng icon để gán cho cửa sổ (ApplicationIcon chỉ gắn icon cho file exe) -->
+    <EmbeddedResource Include="app.ico" LogicalName="QuanLySP.app.ico" />
+  </ItemGroup>
+
+</Project>
